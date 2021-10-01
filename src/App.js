@@ -114,8 +114,8 @@ function App() {
         <Navbar className="mt-3" expand="sm">
           <Container>
             <Row>
-            <Navbar.Brand>🛍️🔎 Searchee</Navbar.Brand>
-            <small className="text-muted" style={{fontSize:"0.8rem"}}>Search Shopee Review! (Beta)</small>
+              <Navbar.Brand>🛍️🔎 Searchee</Navbar.Brand>
+              <small className="text-muted" style={{ fontSize: "0.8rem" }}>Search Shopee Review! (Beta)</small>
 
             </Row>
           </Container>
@@ -280,9 +280,11 @@ function App() {
       </main>
 
       <footer className="text-center pb-2">
-        <p className="mb-0">Made with ❤️ by <a href="https://ynshung.com/" target="_blank" rel="noreferrer">Young Shung</a></p>
-        <p>If you find this site helpful, consider supporting it&nbsp;
-          <a href="https://ynshung.com/support" target="_blank" rel="noreferrer">here</a>☕</p>
+        <Container>
+          <p className="mb-0">Made with ❤️ by <a href="https://ynshung.com/" target="_blank" rel="noreferrer">Young Shung</a></p>
+          <p>If you find this site helpful, consider supporting it&nbsp;
+            <a href="https://ynshung.com/support" target="_blank" rel="noreferrer">here</a>☕</p>
+        </Container>
       </footer>
     </Container>
   );
