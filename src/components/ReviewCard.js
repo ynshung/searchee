@@ -33,7 +33,7 @@ function ReviewCard({ reviews, showMedia }) {
 
           {
             showMedia &&
-            <Row>
+            <Row className="pb-2">
               <Gallery img={r["images"]} vid={r["videos"]} />
             </Row>
           }
