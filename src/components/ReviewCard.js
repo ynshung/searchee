@@ -24,19 +24,14 @@ function ReviewCard({ reviews, showMedia }) {
               </Row>
             </Col>
           </Row>
-          
+
           <hr />
 
           <Row>
             <p>{r["comment"]}</p>
           </Row>
 
-          {
-            showMedia &&
-            <Row className="pb-2">
-              <Gallery img={r["images"]} vid={r["videos"]} />
-            </Row>
-          }
+          {showMedia ? <Gallery img={r["images"]} vid={r["videos"]} /> : null}
 
           <small className="text-muted">[{r["id"]}] Model: {r["product_items"].join(", ")}</small>
 

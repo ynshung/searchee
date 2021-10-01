@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Carousel, CarouselItem } from 'react-bootstrap';
+import { Carousel, CarouselItem, Row } from 'react-bootstrap';
 import ModalGallery from '../ModalGallery';
 
 const shopeeFile = "https://cf.shopee.sg/file/" // _tn
@@ -41,7 +41,7 @@ function Gallery(props) {
   }
 
   return (
-    <>
+    <Row className="pb-3">
       {
         urlList.length === 1 ?
           imgList :
@@ -56,7 +56,7 @@ function Gallery(props) {
         onHide={() => { showModalGallery(false) }}
         defaultIndex={currPos.current}
       />
-    </>
+    </Row>
   )
 }
 

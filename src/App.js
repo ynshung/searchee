@@ -5,6 +5,7 @@ import ReviewCard from './components/ReviewCard';
 import LoadingButton from './components/LoadingButton';
 
 const FETCH_RATINGS_URL = 'https://shopee-search.herokuapp.com/api/get_reviews?'
+// const FETCH_RATINGS_URL = 'http://127.0.0.1:5000/api/get_reviews?'
 const regex = /(?:i.(\d+)\.(\d+)|product\/(\d+)\/(\d+))/g;
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
 
   function loadMore() {
     setLoadingMore(true);
+    setError(null);
 
     fetch(
       FETCH_RATINGS_URL + new URLSearchParams({
@@ -100,7 +102,7 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        setError("Internal server error occured. Please report the console log to the developer.");
+        setError("Internal server error occured. Please report the console log to the developer - " + error.name + ': ' + error.message);
         setLoadingMore(false);
       });
 
@@ -226,8 +228,8 @@ function App() {
           </Form>
 
           <small className="mt-3 mb-0 text-muted" style={{ display: "block" }}>
-            Search Shopee product reviews to research further of the Shopee product you've been wanting with this tool!<br />
-            Works in all countries of Shopee platform. Click on the photos to expand and play video. Search asterisk (*) to show all reviews.
+            Search Shopee user reviews to research further into any product with this simple tool!<br />
+            Works in all countries of Shopee platform. Click on the photos to expand them and play videos. Search asterisk (*) to show all reviews.
           </small>
         </Container>
 
