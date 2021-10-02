@@ -26,10 +26,12 @@ function ReviewCard({ reviews, showMedia }) {
           </Row>
 
           <hr />
-
-          <Row>
-            <p>{r["comment"]}</p>
-          </Row>
+          {
+            r["comment"] &&
+            <Row>
+              <p>{r["comment"]}</p>
+            </Row>
+          }
 
           {showMedia ? <Gallery img={r["images"]} vid={r["videos"]} /> : null}
 
