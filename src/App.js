@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Nav, Navbar, Card, ListGroup, Row, Col, Button, Alert, Badge } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReviewCard from './components/ReviewCard';
 import LoadingButton from './components/LoadingButton';
 
-const FETCH_RATINGS_URL = 'https://shopee-search.herokuapp.com/api/get_reviews?'
-// const FETCH_RATINGS_URL = 'http://127.0.0.1:5000/api/get_reviews?'
+const API_URL = "https://shopee-search.herokuapp.com"
+// const API_URL = "http://127.0.0.1:5000"
+const FETCH_RATINGS_URL = API_URL + '/api/get_reviews?'
 const regex = /(?:i.(\d+)\.(\d+)|product\/(\d+)\/(\d+))/g;
 
 function App() {
@@ -108,25 +109,41 @@ function App() {
 
   }
 
+  const [status, setStatus] = useState("Waiting...");
+  useEffect(() => {
+    setStatus("Loading...");
+
+    fetch(API_URL + "/api/status")
+      .then(response => response.json())
+      .then(data => setStatus(data["status"]))
+      .catch(error => setStatus("Failed"));
+  }, []);
+
   return (
     <Container>
       <header>
         <Navbar className="mt-3" expand="sm">
           <Container>
-            <Row>
-              <Navbar.Brand>🛍️🔎 Searchee</Navbar.Brand>
+            <Col>
+              <Navbar.Brand>🛍️🔎 Searchee</Navbar.Brand><br />
               <small className="text-muted" style={{ fontSize: "0.8rem" }}>Search Shopee Review! (Beta)</small>
-
-            </Row>
+            </Col>
+            <Col>
+              <Nav className="w-100 justify-content-end">
+                <Navbar.Text className="text-end">
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLScrRoKy74FiSUiDwftyE6ZXGJ_GprAHtUQhtGc-oQ_2jG1SSA/viewform"
+                    target="_blank" rel="noreferrer"
+                    style={{ textDecoration: "none" }}>Feedback</a><br />
+                  <Badge bg={ (() => {
+                    if (status === "Failed") return "danger"
+                    else if (status === "Active") return "success"
+                    else return "info"
+                  })()
+                  }>Status: {status}</Badge>
+                </Navbar.Text>
+              </Nav>
+            </Col>
           </Container>
-          <Nav className="w-100 align-items-end justify-content-end">
-            <Navbar.Text className="text-muted">
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLScrRoKy74FiSUiDwftyE6ZXGJ_GprAHtUQhtGc-oQ_2jG1SSA/viewform"
-                target="_blank" rel="noreferrer"
-                style={{ textDecoration: "none" }}>Feedback</a>
-            </Navbar.Text>
-
-          </Nav>
         </Navbar>
 
       </header>
