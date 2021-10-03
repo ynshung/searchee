@@ -7,8 +7,29 @@ import LoadingButton from './components/LoadingButton';
 import MobileShareButton from './assets/mobile-share-button.png'
 import MobileCopyLink from './assets/mobile-copy-link.png'
 
-const API_URL = "https://shopee-search.herokuapp.com"
-// const API_URL = "http://127.0.0.1:5000"
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  updateDoc,
+  doc,
+  increment
+} from '@firebase/firestore/lite'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAhIIgTm9hvyd76s0BziiyeweLCkN9PSek",
+  authDomain: "searchee-5bc2e.firebaseapp.com",
+  projectId: "searchee-5bc2e",
+  storageBucket: "searchee-5bc2e.appspot.com",
+  messagingSenderId: "592920396744",
+  appId: "1:592920396744:web:f31110e81644f5d916f6fd"
+};
+const app = initializeApp(firebaseConfig);
+
+const firestore = getFirestore(app);
+const statsRef = doc(firestore, 'users/--stats--');
+
+// const API_URL = "https://shopee-search.herokuapp.com"
+const API_URL = "http://127.0.0.1:5000"
 const FETCH_RATINGS_URL = API_URL + '/api/get_reviews?'
 const regex = /(?:i.(\d+)\.(\d+)|product\/(\d+)\/(\d+))/g;
 
@@ -72,6 +93,13 @@ function App() {
           setScore(data['score']);
           setSearched([data['offset_search'] - offset, data['total'] - offset]);
           setFound(data['found']);
+
+          (async () => {
+            await updateDoc(statsRef, {
+              found_reviews: increment(data['found']),
+              searched_products: increment(1)
+            });
+          })();
         } else {
           setError(data['message']);
         }
@@ -104,6 +132,13 @@ function App() {
           setScore(data['score']);
           setSearched([data['offset_search'], data['total']]);
           setFound(found + data['found']);
+
+          (async () => {
+            await updateDoc(statsRef, {
+              found_reviews: increment(data['found']),
+              load_more: increment(1)
+            });
+          })();
         } else {
           setError(data['message']);
         }
