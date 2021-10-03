@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Form, Nav, Navbar, Card, ListGroup, Row, Col, Button, Alert, Badge } from 'react-bootstrap';
+import { Container, Form, Nav, Navbar, Card, ListGroup, Row, Col, Button, Alert, Badge, Modal, Image } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReviewCard from './components/ReviewCard';
 import LoadingButton from './components/LoadingButton';
+
+import MobileShareButton from './assets/mobile-share-button.png'
+import MobileCopyLink from './assets/mobile-copy-link.png'
 
 const API_URL = "https://shopee-search.herokuapp.com"
 // const API_URL = "http://127.0.0.1:5000"
@@ -25,6 +28,7 @@ function App() {
   const rating = useRef(0);
   const shopeeId = useRef([0, 0]); // shop, item
 
+  const [showHelp, setShowHelp] = useState(false)
   const [error, setError] = useState(null);
 
   const handleRadio = event => {
@@ -42,6 +46,10 @@ function App() {
     }
     shopeeId.current = regexResult.splice(1, 4).filter(n => n);
     searchTerm.current = e.target[1].value;
+
+    if (searchTerm.current.length > 128) {
+      setError("Search term should not exceed 128 characters.");
+    }
 
     let offset = e.target[2].value;
     if (!offset) offset = 0;
@@ -115,7 +123,7 @@ function App() {
 
     fetch(API_URL + "/api/status")
       .then(response => response.json())
-      .then(data => setStatus(data["status"]))
+      .then(data => setStatus(data["message"]))
       .catch(error => setStatus("Failed"));
   }, []);
 
@@ -134,7 +142,7 @@ function App() {
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLScrRoKy74FiSUiDwftyE6ZXGJ_GprAHtUQhtGc-oQ_2jG1SSA/viewform"
                     target="_blank" rel="noreferrer"
                     style={{ textDecoration: "none" }}>Feedback</a><br />
-                  <Badge bg={ (() => {
+                  <Badge bg={(() => {
                     if (status === "Failed") return "danger"
                     else if (status === "Active") return "success"
                     else return "info"
@@ -156,9 +164,41 @@ function App() {
             </Alert>
           }
 
+          <Modal
+            show={showHelp}
+            onHide={() => setShowHelp(false)}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>How to retrieve Product URL?</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p>To copy the product URL in the mobile application, go to the product page, click the share button (on the same row with rating stars), and click "Copy Link". You can then paste the link here.</p>
+              <Row className="justify-content-center">
+                <Image src={MobileShareButton} rounded style={{ maxWidth: "512px" }} />
+                <Image src={MobileCopyLink} rounded style={{ maxWidth: "512px" }} />
+              </Row>
+              <p>For browser user, simply copy the URL from the address bar while on the product page.</p>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="primary">Got it!</Button>
+            </Modal.Footer>
+
+          </Modal>
+
           <Form onSubmit={(e) => search(e)}>
             <Form.Group className="mb-3" controlId="formProductUrl">
-              <Form.Label>Product URL</Form.Label>
+              <Form.Label>
+                Product URL&nbsp;
+                <svg onClick={() => setShowHelp(true)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" style={{ verticalAlign: "-.125em" }}>
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                </svg>
+              </Form.Label>
               <Form.Control
                 required
                 type="text"
