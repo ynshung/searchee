@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Carousel, CarouselItem, Row } from 'react-bootstrap';
-import ModalGallery from '../ModalGallery';
+import ModalGallery from './ModalGallery';
 
 const shopeeFile = "https://cf.shopee.sg/file/" // _tn
 
