@@ -46,7 +46,7 @@ function App() {
     searchTerm.current = e.target[1].value;
 
     if (searchTerm.current.length > 128) {
-      setError("Search term should not exceed 128 characters.");
+      setError("Search keywords should not exceed 128 characters.");
     }
 
     let offset = e.target[2].value;
@@ -77,7 +77,7 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        setError("Internal server error occured. Please report the console log to the developer - " + error.name + ': ' + error.message);
+        setError("Internal server error occured. Please retry the operation and report the console log to the developer if it occur frequently.");
         setLoading(false);
       });
   }
@@ -109,7 +109,7 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        setError("Internal server error occured. Please report the console log to the developer - " + error.name + ': ' + error.message);
+        setError("Internal server error occured. Please retry the operation and report the console log to the developer if it occur frequently.");
         setLoadingMore(false);
       });
 
@@ -195,7 +195,7 @@ function App() {
               <Col>
                 <Col sm={6} lg={4}>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Search term</Form.Label>
+                    <Form.Label>Search keywords</Form.Label>
                     <Form.Control
                       required
                       type="text"
