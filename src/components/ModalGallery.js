@@ -9,7 +9,13 @@ function ModalGallery(props) {
   let urlList = [];
   let imgList;
 
-  if (img && img.length !== 0) urlList.push(...img.map(a => shopeeFile + a));
+  if (img && img.length !== 0) {
+    if (img[0].includes('http')) {
+      urlList = img;
+    } else {
+      urlList.push(...img.map(a => shopeeFile + a));
+    }
+  }
   if (vid && vid.length !== 0) {
     urlList.push(...vid.map(a => a["url"]));
   }

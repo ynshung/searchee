@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Nav, Navbar, Card, ListGroup, Row, Col, Button, Alert, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ReviewCard from './components/ReviewCard';
+import ReviewList from './components/ReviewList';
 import LoadingButton from './components/LoadingButton';
 import ModalTutorial from './components/ModalTutorial';
 
-const API_URL = "https://shopee-search.herokuapp.com"
-// const API_URL = "http://127.0.0.1:5000"
+// const API_URL = "https://shopee-search.herokuapp.com"
+const API_URL = "http://127.0.0.1:5000"
 const FETCH_RATINGS_URL = API_URL + '/api/get_reviews?'
 const regex = /(?:i.(\d+)\.(\d+)|product\/(\d+)\/(\d+))/g;
 
@@ -197,9 +197,8 @@ function App() {
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Label>Search keywords</Form.Label>
                     <Form.Control
-                      required
                       type="text"
-                      placeholder="Search"
+                      placeholder="Show all"
                     />
                   </Form.Group>
                 </Col>
@@ -271,7 +270,7 @@ function App() {
 
           <small className="mt-3 mb-0 text-muted" style={{ display: "block" }}>
             Search Shopee user reviews to research further into any product with this simple tool!<br />
-            Works in all countries of Shopee platform. Click on the photos to expand them and play videos. Search asterisk (*) to show all reviews.
+            Works in all countries of Shopee platform. Click on the photos to expand them and play videos. Show all reviews by leaving the search bar blank.
           </small>
         </Container>
 
@@ -283,7 +282,7 @@ function App() {
 
             <ListGroup variant="flush">
               <Row className="align-items-center my-3 mx-1">
-                <ReviewCard reviews={listReview} showMedia={showMedia} />
+                <ReviewList reviews={listReview} showMedia={showMedia} />
               </Row>
             </ListGroup>
 

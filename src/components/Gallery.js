@@ -11,12 +11,19 @@ function Gallery(props) {
   const [showingModalGallery, showModalGallery] = useState(false);
 
   let urlList = [];
-  let imgList;
 
-  if (img && img.length !== 0) urlList.push(...img.map(a => shopeeFile + a + "_tn"))
+  if (img && img.length !== 0) {
+    if (img[0].includes('http')) {
+      urlList = img;
+    } else {
+      urlList.push(...img.map(a => shopeeFile + a + "_tn"));
+    }
+  }
   if (vid && vid.length !== 0) {
     urlList.push(...vid.map(a => a["cover"]));
   }
+
+  let imgList;
 
   if (urlList.length === 0) {
     return (<></>)
