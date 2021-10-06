@@ -5,8 +5,8 @@ import ReviewList from './components/ReviewList';
 import LoadingButton from './components/LoadingButton';
 import ModalTutorial from './components/ModalTutorial';
 
-// const API_URL = "https://shopee-search.herokuapp.com"
-const API_URL = "http://127.0.0.1:5000"
+const API_URL = "https://shopee-search.herokuapp.com"
+// const API_URL = "http://127.0.0.1:5000"
 const FETCH_RATINGS_URL = API_URL + '/api/get_reviews?'
 const regex = /(?:i.(\d+)\.(\d+)|product\/(\d+)\/(\d+))/g;
 
