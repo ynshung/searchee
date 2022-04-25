@@ -11,3 +11,6 @@ npm start
 ```
 
 Please note that you'll need the backend server that'll fetch data from `https://shopee.sg/api/v2/item/get_ratings`. You may contact me for more information.
+
+## TODO
+* Revamp to be used locally (able to cache data and search all automatically)
